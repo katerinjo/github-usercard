@@ -29,7 +29,9 @@
 // import axios from 'axios'
 
 axios.get('https://api.github.com/users/katerinjo')
-  .then(console.log)
+  .then(message => {
+    document.querySelector('.cards').appendChild(card(message.data))
+  })
   .catch(console.log)
 const followersArray = [];
 
@@ -60,3 +62,43 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+function card(data) {
+  const outer = document.createElement('div')
+  const image = document.createElement('img')
+  const info = document.createElement('div')
+  const title = document.createElement('h3')
+  const username = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  outer.classList.add('card')
+  info.classList.add('card-info')
+  title.classList.add('name')
+  username.classList.add('username')
+
+  image.src = data.avatar_url
+
+  title.textContent = data.name
+  username.textContent = data.login
+  location.textContent = `Location: ${data.location}`
+  profile.innerHTML = `<a href='${data.html_url}'>${data.html_url}</a>`
+  followers.textContent = `Followers: ${data.followers}`
+  following.textContent = `Following: ${data.following}`
+  bio.textContent = `Bio: ${data.bio}`
+
+  outer.appendChild(image)
+  outer.appendChild(info)
+  info.appendChild(title)
+  info.appendChild(username)
+  info.appendChild(location)
+  info.appendChild(profile)
+  info.appendChild(followers)
+  info.appendChild(following)
+  info.appendChild(bio)
+
+  return outer
+}
