@@ -24,6 +24,13 @@
           user, and adding that card to the DOM.
 */
 
+// const axios = require('axios')
+// const axios = require('axios');
+// import axios from 'axios'
+
+axios.get('https://api.github.com/users/katerinjo')
+  .then(console.log)
+  .catch(console.log)
 const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
@@ -35,7 +42,7 @@ const followersArray = [];
     <h3 class="name">{users name}</h3>
     <p class="username">{users user name}</p>
     <p>Location: {users location}</p>
-    <p>Profile:  
+    <p>Profile:
       <a href={address to users github page}>{address to users github page}</a>
     </p>
     <p>Followers: {users followers count}</p>
@@ -46,7 +53,7 @@ const followersArray = [];
 
 */
 
-/* List of LS Instructors Github username's: 
+/* List of LS Instructors Github username's:
   tetondan
   dustinmyers
   justsml
