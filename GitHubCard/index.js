@@ -15,7 +15,7 @@
 */
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
-          follow this link in your browser https://api.github.com/users/<Your github name>/followers 
+          follow this link in your browser https://api.github.com/users/katerinjo/followers 
           , manually find some other users' github handles, or use the list found 
           at the bottom of the page. Get at least 5 different Github usernames and add them as
           Individual strings to the friendsArray below.
@@ -23,8 +23,18 @@
           Using that array, iterate over it, requesting data for each user, creating a new card for each
           user, and adding that card to the DOM.
 */
+function addCard(userHandle) {
+  axios.get(`https://api.github.com/users/${userHandle}`)
+    .then(message => {
+      document.querySelector('.cards').appendChild(card(message.data))
+    })
+    .catch(console.log)
+}
 
-const followersArray = [];
+const followersArray = ['RobinvanderVliet', 'tetondan', 'dustinmyers', 'justsml', 'luishrd']
+
+addCard('katerinjo')
+followersArray.forEach(addCard)
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -35,7 +45,7 @@ const followersArray = [];
     <h3 class="name">{users name}</h3>
     <p class="username">{users user name}</p>
     <p>Location: {users location}</p>
-    <p>Profile:  
+    <p>Profile:
       <a href={address to users github page}>{address to users github page}</a>
     </p>
     <p>Followers: {users followers count}</p>
@@ -46,10 +56,50 @@ const followersArray = [];
 
 */
 
-/* List of LS Instructors Github username's: 
+/* List of LS Instructors Github username's:
   tetondan
   dustinmyers
   justsml
   luishrd
   bigknell
 */
+
+function card(data) {
+  const outer = document.createElement('div')
+  const image = document.createElement('img')
+  const info = document.createElement('div')
+  const title = document.createElement('h3')
+  const username = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  outer.classList.add('card')
+  info.classList.add('card-info')
+  title.classList.add('name')
+  username.classList.add('username')
+
+  image.src = data.avatar_url
+
+  title.textContent = data.name
+  username.textContent = data.login
+  location.textContent = `Location: ${data.location}`
+  profile.innerHTML = `<a href='${data.html_url}'>${data.html_url}</a>`
+  followers.textContent = `Followers: ${data.followers}`
+  following.textContent = `Following: ${data.following}`
+  bio.textContent = `Bio: ${data.bio}`
+
+  outer.appendChild(image)
+  outer.appendChild(info)
+  info.appendChild(title)
+  info.appendChild(username)
+  info.appendChild(location)
+  info.appendChild(profile)
+  info.appendChild(followers)
+  info.appendChild(following)
+  info.appendChild(bio)
+
+  return outer
+}
